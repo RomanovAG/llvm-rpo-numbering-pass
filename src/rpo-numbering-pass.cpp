@@ -25,11 +25,12 @@ VisitFunction(const Function &Func)
 		{
 			BasicBlock *Successor = Terminator->getSuccessor(i);
 
-			if (visited.find(Successor) == visited.end())
+			const auto &visited_successor = visited.find(Successor);
+			if (visited_successor == visited.end())
 			{
 				dfs(Successor);
 			}
-			else if (visited.at(Successor) == true)
+			else if (visited_successor->second == true)
 			{
 				/* if open node encountered then back edge found */
 				back_edges.insert(std::make_pair(BB, Successor));
