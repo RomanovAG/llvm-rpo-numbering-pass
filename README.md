@@ -9,5 +9,5 @@ $ make
 ```
 $ cd llvm-project
 $ ./build/bin/clang-20 -O0 -S -emit-llvm ./llvm-rpo-numbering-pass/tests/rpo-input.c -o rpo-input.ll
-$ ./build/bin/opt -load-pass-plugin ./llvm-rpo-numbering-pass/build/librpo-numbering-pass.so -passes=llvm-rpo-numbering-pass -disable-output rpo-input.ll
+$ ./build/bin/opt -load-pass-plugin ./llvm-rpo-numbering-pass/build/librpo-numbering-pass.so -passes=rpo-numbering-pass -disable-output rpo-input.ll
 ```
