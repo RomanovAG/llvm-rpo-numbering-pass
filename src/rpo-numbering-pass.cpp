@@ -8,8 +8,9 @@ using namespace llvm;
 namespace {
 
 void
-VisitFunction(Function &Func)
+VisitFunction(const Function &Func)
 {
+	/* if bool == true, node is open, otherwise it's closed but still visited since it's in the map */
 	DenseMap<const BasicBlock *, bool> visited;
 	TinyPtrVector<const BasicBlock *> order;
 	DenseMap<const BasicBlock *, const BasicBlock *> back_edges;
@@ -30,6 +31,7 @@ VisitFunction(Function &Func)
 			}
 			else if (visited.at(Successor) == true)
 			{
+				/* if open node encountered then back edge found */
 				back_edges.insert(std::make_pair(BB, Successor));
 			}
 		}
@@ -38,13 +40,14 @@ VisitFunction(Function &Func)
 		visited[BB] = false;
 	};
 
+	/* start from entry basic block */
 	dfs( &(Func.getEntryBlock()) );
 
 	outs() << "\nFunction name: " << Func.getName() << "\n";
-	outs() << "\tIndex of Basic Block | Number of Instructions\n"
-		  "\t             |                |\n"
-		  "\t             +---> 12(34) <---+\n";
-	outs() << "\tRPO: ";
+	outs() << "\tIndex of Basic Block / Number of Instructions\n"
+		  "\t     ┃ ┏━━━━━━━━━━━━━━━━━┛\n"
+		  "\t     ᐯ ᐯ\n";
+	outs() << "\tRPO: ";	/* First BB should be 0 */
 	for (auto it = order.rbegin(); it != order.rend(); it++)
 	{
 		outs() << (*it)->getNumber() << "(" << (*it)->size() << ") ";
