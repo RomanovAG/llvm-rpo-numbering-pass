@@ -49,14 +49,14 @@ VisitFunction(const Function &Func)
 		  "\t     ┃ ┏━━━━━━━━━━━━━━━━━┛\n"
 		  "\t     ᐯ ᐯ\n";
 	outs() << "\tRPO: ";	/* First BB should be 0 */
-	for (auto it = order.rbegin(); it != order.rend(); it++)
+	for (auto it = order.rbegin(), ite = order.rend(); it != ite; ++it)
 	{
 		outs() << (*it)->getNumber() << "(" << (*it)->size() << ") ";
 	}
 	outs() << "\n";
 	for (const auto &edge : back_edges)
 	{
-		outs()	<< "\tFound back edge: " 
+		outs()	<< "\tFound back edge: "
 			<< edge.first->getNumber() << "(" << edge.first->size() << ")" 
 			<< " -> " 
 			<< edge.second->getNumber() << "(" << edge.second->size() << ")" 
